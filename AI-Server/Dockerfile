@@ -35,7 +35,16 @@ RUN pip install --no-cache-dir tqdm==4.66.5
 RUN pip install --no-cache-dir typing_extensions==4.12.2
 RUN pip install --no-cache-dir uvicorn==0.32.0
 RUN pip install --no-cache-dir wheel==0.44.0
-RUN pip install --no-cache-dir requests==2.31.0
+RUN pip install --no-cache-dir requests==2.32.3
+RUN pip install --no-cache-dir charset-normalizer==3.4.0
+RUN pip install --no-cache-dir iniconfig==2.0.0
+RUN pip install --no-cache-dir packaging==24.1
+RUN pip install --no-cache-dir pluggy==1.5.0
+RUN pip install --no-cache-dir pytest==8.3.3
+RUN pip install --no-cache-dir pytest-asyncio==0.24.0
+RUN pip install --no-cache-dir pytest-mock==3.14.0
+RUN pip install --no-cache-dir tomli==2.0.2
+RUN pip install --no-cache-dir urllib3==2.2.3
 
 # 깃 레포지토리에서 프로젝트 파일을 복사
 COPY ./FarmMate-AI-Server .
