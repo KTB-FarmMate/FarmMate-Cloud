@@ -1,0 +1,53 @@
+---
+- name: EC2 인스턴스 기본 설정
+  hosts: service_server
+  become: true
+
+  vars_files:
+    - group_vars/all/vault.yml
+    - group_vars/all/vars.yml
+
+  tasks:
+    # Docker 설치
+    - name: Docker 설치 (Amazon Linux 2023 기준)
+      ansible.builtin.dnf:
+        name: docker
+        state: present
+
+    - name: Docker 서비스 시작 및 활성화
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    # Docker 그룹에 ec2-user 추가
+    - name: Ec2-user를 Docker 그룹에 추가
+      ansible.builtin.user:
+        name: ec2-user
+        groups: docker
+        append: true
+
+    # AWS CLI 설정 파일 생성
+    - name: .aws 디렉토리 생성
+      ansible.builtin.file:
+        path: "/home/{{ target_user }}/.aws"
+        state: directory
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
+        mode: '0700'
+
+    - name: AWS credentials 파일 배포
+      ansible.builtin.template:
+        src: "aws_credentials.j2"
+        dest: "/home/{{ target_user }}/.aws/credentials"
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
+        mode: '0600'
+
+    - name: AWS config 파일 배포
+      ansible.builtin.template:
+        src: "aws_config.j2"
+        dest: "/home/{{ target_user }}/.aws/config"
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
+        mode: '0600'
