@@ -5,7 +5,7 @@
 
   vars_files:
     - group_vars/all/vars_jenkins.yml
-  
+
   tasks:
     # 사전 작업
     - name: Jenkins 컨테이너 중지

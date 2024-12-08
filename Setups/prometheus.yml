@@ -1,0 +1,44 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  # Prometheus 자신을 모니터링
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "host-prometheus"
+    static_configs:
+      - targets: ["192.168.3.137:9100"]
+
+  # ai
+  - job_name: "host-ai"
+    static_configs:
+      - targets: ["192.168.4.210:9100"]
+  
+  # backend
+  - job_name: "host-api"
+    static_configs:
+      - targets: ["192.168.4.86:9100"]
+
+  # jenkins
+  - job_name: "host-jenkins-master"
+    static_configs:
+      - targets: ["192.168.3.122:9100"]
+
+  # nginx
+  - job_name: "host-nginx-service"
+    static_configs:
+      - targets: ["192.168.2.211:9100"]
+  - job_name: "host-nginx-cloud"
+    static_configs:
+      - targets: ["192.168.1.172:9100"]
+
+  # grafana
+  - job_name: "host-grafana"
+    static_configs:
+      - targets: ["192.168.3.75:9100"]
+
+  # nginx_exporter
+  - job_name: "nginx-exporter"
+    static_configs:
+      - targets: ["192.168.2.211:9113"]
